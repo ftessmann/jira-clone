@@ -40,7 +40,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
                         variant="secondary"
                         onClick={handleButtonClick}
                     >
-                        {isSignUpPage ? "Sign In" : "Sign Up"}
+                        {isSignUpPage ? "Login" : "Sign Up"}
                     </Button>
                 </nav>
                 <div className="flex flex-col items-center justify-center pt-4 md:pt-14">
