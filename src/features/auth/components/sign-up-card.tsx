@@ -27,16 +27,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const formSchema = z.object({
-    name: z.string().trim().min(1, "Required"),
-    email: z.string().email(),
-    password: z.string().min(8, "Minimum 8 characters")
-});
+import { signUpSchema } from "../schemas";
+
 
 export const SignUpCard = () => {
 
-    const form = useForm<z.infer <typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer <typeof signUpSchema>>({
+        resolver: zodResolver(signUpSchema),
         defaultValues: {
             name: "",
             email: "",
@@ -44,7 +41,7 @@ export const SignUpCard = () => {
         }
     });
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const onSubmit = (values: z.infer<typeof signUpSchema>) => {
         console.log({values})
     };
 
