@@ -6,10 +6,12 @@ import {
 } from "@tanstack/react-query";
 
 import { client } from "@/lib/rpc";
+import { useRouter } from "next/navigation";
 
 type ResponseType = InferResponseType<typeof client.api.auth.login["$post"]>;
 
 export const useLogout = () => {
+    const router = useRouter();
     const queryClient = useQueryClient();
     const mutation = useMutation<
         ResponseType,
@@ -21,6 +23,7 @@ export const useLogout = () => {
         },
         // force the invalidation of the current client
         onSuccess: () => {
+            router.refresh()
             queryClient.invalidateQueries({ queryKey: ["current"]})
         }
     });
