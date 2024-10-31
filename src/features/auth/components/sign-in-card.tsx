@@ -1,3 +1,5 @@
+"use client";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -32,7 +34,7 @@ import { Input } from "@/components/ui/input";
 
 export const SignInCard = () => {
 
-    const { mutate } = useLogin();
+    const { mutate, isPending } = useLogin();
 
     const form = useForm<z.infer <typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -97,7 +99,7 @@ export const SignInCard = () => {
                             )}
                         />                
                         <Button
-                            disabled={false}
+                            disabled={isPending}
                             size="lg"
                             className="w-full"
                         >
@@ -111,7 +113,7 @@ export const SignInCard = () => {
             </div>
             <CardContent className="p-7 flex flex-col gap-y-4">
                 <Button
-                    disabled={false}
+                    disabled={isPending}
                     variant="secondary"
                     size="lg"
                     className="w-full"
@@ -122,7 +124,7 @@ export const SignInCard = () => {
                     Login with Google
                 </Button>
                 <Button
-                    disabled={false}
+                    disabled={isPending}
                     variant="secondary"
                     size="lg"
                     className="w-full"
