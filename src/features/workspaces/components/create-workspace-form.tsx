@@ -1,24 +1,20 @@
 "use client";
 
 import { z } from "zod";
-
 import { useRef } from "react";
-
 import { useForm } from "react-hook-form";
-
 import Image from "next/image";
-
 import { ImageIcon } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createWorkspaceSchema } from "../schemas";
+import { useCreateWorkspace } from "../api/use-create-workspace";
 
 import { DottedSeparator } from "@/components/dotted-separator";
-
 import { 
     Avatar,
     AvatarFallback,   
 } from "@/components/ui/avatar";
-
 import {
     Card,
     CardContent,
@@ -26,7 +22,6 @@ import {
     CardTitle
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
 import {
     Form,
     FormField,
@@ -37,8 +32,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { createWorkspaceSchema } from "../schemas";
-import { useCreateWorkspace } from "../api/use-create-workspace";
 
 interface CreateWorkspaceFormProps {
     onCancel?: () => void;
@@ -47,6 +40,7 @@ interface CreateWorkspaceFormProps {
 export const CreateWorkspaceForm = ({
     onCancel,
 }: CreateWorkspaceFormProps ) => {
+    const router = useRouter();
     const { mutate, isPending } = useCreateWorkspace();
 
     const inputRef = useRef<HTMLInputElement>(null);
@@ -65,9 +59,9 @@ export const CreateWorkspaceForm = ({
         }
 
         mutate({ form: finalValues }, {
-            onSuccess: () => {
+            onSuccess: ({ data }) => {
                 form.reset();
-                // TODO: redirect to new workspace
+                router.push(`/workspaces/${data.$id}`);
             }
         })
     };
